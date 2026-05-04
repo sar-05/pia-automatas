@@ -1,0 +1,67 @@
+\documentclass[spanish, 11pt, leqno]{report}
+% \documentclass[spanish, 11pt, leqno,draft]{report}
+\usepackage[top=1.0in, bottom=1.0in, left=1.0in, right=1.0in]{geometry}
+% \usepackage[top=1.0in, bottom=1.0in, left=1.0in, right=1.0in, showframe]{geometry}
+\usepackage{setspace}
+% more precise than changing linespread
+\onehalfspacing
+\usepackage{fontspec}
+\setmainfont[
+    Extension = .otf,
+    UprightFont = *-regular,
+    BoldFont = *-bold,
+    ItalicFont = *-italic,
+    BoldItalicFont = *-bolditalic
+]{texgyrepagella}
+% add for internationalization
+\usepackage{babel}
+\addto\captionsspanish{\renewcommand{\figurename}{Versión}}
+% add to remove chapter display text and eave just the title
+\usepackage{titlesec}
+\titleformat{\chapter}[display]{\normalfont\huge\bfseries}{}{0pt}{\Huge}
+% Removes indent and adds space between paragraphs
+\usepackage{parskip} 
+% include amsmath to be able to use \text
+% include tipa to get the blank tape symbol
+% redefine \textcrb to also work in mathmode
+% trigger the redefinition inside AtBeginDocument
+% to avoid hyperref or any othe package to override it
+\usepackage{amsmath}
+\usepackage{tipa}
+\AtBeginDocument{%
+  \let\texttextcrb\textcrb %picks up hyperref version if included
+  \renewcommand{\textcrb}{%
+    \ifmmode
+      \text{\texttextcrb}%
+    \else
+      \texttextcrb
+    \fi
+  }%
+}
+% create vdash with argument
+% add fixed hapace on both sides for visibility
+\newcommand{\ovdash}[1][*]{\hspace{0.25em}\stackrel{#1}{\vdash}\hspace{0.25em}}
+% add for H option to figure environment
+\usepackage{float}
+% add to reduce all captions font size
+\usepackage[font=footnotesize]{caption}
+% add to load title page images from specific path
+\usepackage{graphicx}
+\graphicspath{{images/}}
+% add to produce automata grahics
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, automata, positioning}
+ % add for creating links between document references, should be added last
+\usepackage{hyperref}
+% add to be able to have a multi-file project, should be added last
+\usepackage{subfiles}
+
+\begin{document}
+    \subfile{sections/titlepage}
+    \tableofcontents
+    \newpage
+    \subfile{sections/analisis8}
+    \subfile{sections/definicion8}
+    \subfile{sections/diagramas8}
+    \subfile{sections/comprobaciones8}
+\end{document}

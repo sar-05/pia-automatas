@@ -1,0 +1,65 @@
+\documentclass[../main.tex]{subfiles}
+\graphicspath{{\subfix{../images/}}}
+
+\begin{document}
+    \section{Comprobaciones para \texorpdfstring{\emph{M\textsubscript{8}}}{M8}}
+
+    Se comprueba que \(M_8\) es capaz de identificar que \(w_0\in L_8\):
+    \begin{alignat*}{4}
+        {} & \delta(q_0, \underline{\textcrb}acc)
+           & \ovdash[1] & \delta(q_0, \textcrb\underline{a}cc\textcrb)
+           & \ovdash[2] & \delta(q_2, \textcrb\underline{c}c\textcrb)
+           & \ovdash[3] & \delta(q_2, \textcrb c\underline{c}\textcrb) \\
+        {} & {}
+           & \ovdash[3] & \delta(q_2, \textcrb cc\underline{\textcrb})
+           & \ovdash[4] & \delta(q_3, \textcrb c\underline{c}\textcrb)
+           & \ovdash[5] & \delta(q_4, \textcrb\underline{c}\textcrb) \\
+        {} & {}
+           & \ovdash[6] & \delta(q_5, \underline{\textcrb}\textcrb)
+           & \ovdash[8] & \delta(q_3, \textcrb\underline{\textcrb})
+           & \ovdash[9] & \delta(q_{11}, \textcrb\textcrb)
+    \end{alignat*}
+    Se comprueba que \(M_8\) es capaz de identificar que \(w_2\in L_8\):
+    \begin{alignat*}{4}
+        {} & \delta(q_0, \textcrb aaaabaabacc\textcrb)
+           & \ovdash[1] & \delta(q_1, \textcrb\underline{a}aaabaabacc\textcrb)
+           & \ovdash[2] & \delta(q_2, \textcrb\underline{a}aabaabacc\textcrb)
+           & \ovdash[3] & \delta(q_2, \textcrb a\underline{a}abaabacc\textcrb)\\
+        {} & {}
+           & \ovdash[+] & \delta(q_2, \textcrb aaabaabacc\underline{\textcrb})
+           & \ovdash[4] & \delta(q_3, \textcrb aaabaabac\underline{c}\textcrb)
+           & \ovdash[5] & \delta(q_4, \textcrb aaabaaba\underline{c}\textcrb)\\
+        {} & {}
+           & \ovdash[6] & \delta(q_5, \textcrb aaabaab\underline{a}\textcrb)
+           & \ovdash[7] & \delta(q_5, \textcrb aaabaa\underline{b}a\textcrb)
+           & \ovdash[+] & \delta(q_5, \underline{\textcrb}aaabaaba\textcrb)\\
+        {} & {}
+           & \ovdash[8] & \delta(q_6, \textcrb\underline{a}aabaaba\textcrb)
+           & \ovdash[10] & \delta(q_7, \textcrb\underline{a}abaaba\textcrb)
+           & \ovdash[11] & \delta(q_7, \textcrb a\underline{a}baaba\textcrb)\\
+        {} & {}
+           & \ovdash[+] & \delta(q_7, \textcrb aabaaba\underline{\textcrb})
+           & \ovdash[12] & \delta(q_8, \textcrb aabaab\underline{a}\textcrb)
+           & \ovdash[13] & \delta(q_9, \textcrb aabaa\underline{b}\textcrb)\\
+        {} & {}
+           & \ovdash[14] & \delta(q_{10}, \textcrb aaba\underline{a}\textcrb)
+           & \ovdash[15] & \delta(q_{5}, \textcrb aab\underline{a}\textcrb)
+           & \ovdash[7] & \delta(q_{5}, \textcrb aa\underline{b}a\textcrb)\\
+        {} & {}
+           & \ovdash[+] & \delta(q_{5}, \underline{\textcrb} aaba\textcrb)
+           & \ovdash[8] & \delta(q_{6}, \textcrb \underline{a}aba\textcrb)
+           & \ovdash[9] & \delta(q_{7}, \textcrb \underline{a}ba\textcrb)\\
+        {} & {}
+           & \ovdash[11] & \delta(q_{7}, \textcrb a\underline{b}a\textcrb)
+           & \ovdash[+] & \delta(q_{7}, \textcrb aba\underline{\textcrb})
+           & \ovdash[12] & \delta(q_{8}, \textcrb ab\underline{a}\textcrb)\\
+        {} & {}
+           & \ovdash[13] & \delta(q_{9}, \textcrb a\underline{b}\textcrb)
+           & \ovdash[14] & \delta(q_{10}, \textcrb \underline{a}\textcrb)
+           & \ovdash[15] & \delta(q_5, \underline{\textcrb}\textcrb)\\
+        {} & {}
+           & \ovdash[8] & \delta(q_6, \textcrb\underline{\textcrb})
+           & \ovdash[9] & \delta(q_6, \textcrb\textcrb)
+           & {}
+    \end{alignat*}
+\end{document}

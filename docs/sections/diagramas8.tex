@@ -1,0 +1,87 @@
+\documentclass[../main.tex]{subfiles}
+\graphicspath{{\subfix{../images/}}}
+
+\begin{document}
+    \section{Diagramas para \texorpdfstring{\emph{M\textsubscript{8}}}{M8}}
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture} [node distance = 2.5 cm,
+                scale=1.15,
+                transform shape,
+                on grid,
+                auto,
+                every state/.style = {draw = white}
+            ]
+            \node (q0) [state, initial, initial text = {}] {$R$};
+            \node (q1) [state, right = of q0] {$\textcrb R \textcrb$};
+            \node (q2) [state, right = of q1] {$\textcrb L$};
+            \node (q3) [state, right = of q2] {$\textcrb L$};
+            \node (q4) [state, right = of q3] {$\textcrb L_\textcrb$};
+            \node (q5) [state, right = of q4] {$\textcrb R$};
+            \node (qn) [state, below = of q5] {};
+            \node (q6) [state, below = of qn] {$\textcrb R_\textcrb$};
+            \node (q11) [state, accepting, draw = black, below = of q4] {$S$};
+            \node (q7) [state, left = of q6] {$\textcrb L$};
+            \node (q8) [state, left = of q7] {$\textcrb L$};
+            \node (q9) [state, left = of q8] {$\textcrb L$};
+            \node (q10) [state, left = of q9] {$\textcrb L$};
+
+            \path[-To]
+            (q0) edge node {\(\sigma=a\)} (q1)
+            (q1) edge node {\(\sigma=\textcrb\)} (q2)
+            (q2) edge node {\(\sigma=c\)} (q3)
+            (q3) edge node {\(\sigma=c\)} (q4)
+            (q4) edge node {\(\sigma=\textcrb\)} (q5)
+            (q5) edge node [left] {\(\sigma=a\)} (q6)
+            (q5) edge node [above left] {\(\sigma=\textcrb\)} (q11)
+            (q6) edge node {\(\sigma=\textcrb\)} (q7)
+            (q7) edge node {\(\sigma=a\)} (q8)
+            (q8) edge node {\(\sigma=b\)} (q9)
+            (q9) edge node {\(\sigma=a\)} (q10)
+            (q10) edge node {\(\sigma=a\)} (q4);
+
+        \end{tikzpicture}
+        \caption{Diagrama de composición}
+    \end{figure}
+    \vfill
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture} [node distance = 2.5cm,
+                scale=1.15,
+                transform shape,
+                on grid,
+                auto,
+            ]
+            \node (q0) [state, initial, initial text = {}] {\(q_0\)};
+            \node (q1) [state, right = of q0] {\(q_1\)};
+            \node (q2) [state, right = of q1] {\(q_2\)};
+            \node (q3) [state, below = of q2] {\(q_3\)};
+            \node (q4) [state, below = of q3] {\(q_4\)};
+            \node (q5) [state, below = of q4] {\(q_5\)};
+            \node (q6) [state, left = of q5] {\(q_6\)};
+            \node (q7) [state, left = of q6] {\(q_7\)};
+            \node (q8) [state, left = of q7] {\(q_8\)};
+            \node (q9) [state, above = of q8] {\(q_9\)};
+            \node (q10) [state, above = of q9] {\(q_{10}\)};
+            \node (q11) [state, accepting, above = of q7] {\(q_{11}\)};
+
+            \path[-To]
+            (q0) edge node {\(\textcrb\rightarrow\textcrb R\)}   (q1)
+            (q1) edge node {\(a\rightarrow\textcrb R\)}   (q2)
+            (q2) edge [loop right] node [above = 0.4cm] {\(a, b, c \rightarrow R\)}   (q2)
+            (q2) edge node {\(\textcrb\rightarrow\textcrb L\)}   (q3)
+            (q3) edge node {\(c\rightarrow\textcrb L\)}   (q4)
+            (q4) edge node {\(c\rightarrow\textcrb L\)}   (q5)
+            (q5) edge [loop below] node {\(a, b \rightarrow L\)}   ()
+            (q5) edge node {\(\textcrb\rightarrow\textcrb R\)}   (q6)
+            (q6) edge node {\(a\rightarrow\textcrb R\)}   (q7)
+            (q7) edge node {\(\textcrb\rightarrow\textcrb L\)}   (q8)
+            (q7) edge [loop below] node {\(a, b \rightarrow R\)}   ()
+            (q8) edge node {\(a\rightarrow\textcrb L\)}   (q9)
+            (q9) edge node {\(b\rightarrow\textcrb L\)}   (q10)
+            (q6) edge [bend right] node [above right] {\(b\rightarrow S\)}   (q11)
+            (q10) edge [bend left] node [above right] {\(a\rightarrow\textcrb L\)}   (q5);
+        \end{tikzpicture}
+        \caption{Diagrama de estados}
+    \end{figure}
+\end{document}

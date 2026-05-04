@@ -1,0 +1,19 @@
+\documentclass[../main.tex]{subfiles}
+\graphicspath{{\subfix{../images/}}}
+
+\begin{document}
+    \section{Análisis de \texorpdfstring{\emph{L\textsubscript{8}}}{L8}}
+    \[
+        \boxed{L_8=\{a^{n+1}(aba)^nc^2:n\ge0\}}
+    \]
+
+    Este lenguaje crece respecto al exponente \(n\). Si analizamos las cadenas generadas por \(n\in\{0,1,2\}\) obtenemos:
+    \begin{align*}
+        w_0 &= \text{``acc''}\\
+        w_1 &=\text{``aaabacc''}\\
+        w_2 &=\text{``aaaabaabacc''}
+    \end{align*}
+
+    De esta forma, observamos que cualquier cadena \(w_i\in L_8\) debe iniciar con una ``a'' y terminar con ``cc''.
+    Diseñamos la maquina de Turing \(M_8\) para que primero verifique que estas condiciones mínimas se cumplan y luego, através de reglas de busqueda, consuma de izquierda a derecha el resto de la cadena. \nolinebreak\(M_8\) llegará a su estado de acpetación si y solo si las subcadenas ``a'' y ``aba'' se repiten \(n\) veces tal como indica \(L_8\).
+\end{document}

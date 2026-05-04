@@ -1,0 +1,33 @@
+\documentclass[../main.tex]{subfiles}
+\graphicspath{{\subfix{../images/}}}
+
+\begin{document}
+    \section{Definición de \texorpdfstring{\emph{M\textsubscript{8}}}{M8}}
+    Sea \(M_8 = (Q, \Sigma, \Gamma, s, \text{\textcrb}, F, \delta) \) la maquina de Turing tal que \(L(M_8)=L_8\), entonces
+    \begin{align*}
+        Q &= \{q_i : 0 \ge i \ge 11 \} \\
+        \Sigma &= \{ a, b \} \\
+        \Gamma &= \Sigma \cup \{ \textcrb \} \\
+        s &= q_0 \in Q \\
+        F &= \{ q_{11} \} \subset Q
+    \end{align*}
+    y \(\delta\) dado por
+    {\allowdisplaybreaks
+    \begin{alignat}{2}
+        \delta(q_0, \textcrb)  &= (q_1, \textcrb, R)    \\
+        \delta(q_1, a)         &= (q_2, \textcrb, R)    \\
+        \delta(q_2, \sigma_1)  &= (q_2, \sigma_1, R),   &\quad \sigma_1 = \{a, b, c\} \\
+        \delta(q_2, \textcrb)  &= (q_3, \textcrb, L)    \\
+        \delta(q_3, c)         &= (q_4, \textcrb, L)    \\
+        \delta(q_4, c)         &= (q_5, \textcrb, L)    \\
+        \delta(q_5, \sigma_2)  &= (q_5, \sigma_2, L),   &\quad \sigma_2 = \{a, b\}   \\
+        \delta(q_5, \textcrb)  &= (q_6, \textcrb, R)    \\
+        \delta(q_6, \textcrb)  &= (q_{11}, \textcrb, S) \\
+        \delta(q_6, a)         &= (q_7, \textcrb, R)    \\
+        \delta(q_7, \sigma_3)  &= (q_7, \sigma_3, R),   &\quad \sigma_3 = \{a, b\}   \\
+        \delta(q_7, \textcrb)  &= (q_8, \textcrb, L)    \\
+        \delta(q_8, a)         &= (q_9, \textcrb, L)    \\
+        \delta(q_9, b)         &= (q_{10}, \textcrb, L) \\
+        \delta(q_{10}, a)      &= (q_5, \textcrb, L)
+    \end{alignat}}
+\end{document}
