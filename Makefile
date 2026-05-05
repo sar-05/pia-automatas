@@ -26,4 +26,4 @@ build build/debug build/release:
 	mkdir -p $@
 
 clean:
-	rm -rf build/
+	rm -rf $(filter-out .gitignore, $(wildcard build/*))
