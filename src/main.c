@@ -1,7 +1,7 @@
 #define _POSIX_C_SOURCE 200809L
+#include "machine.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "machine.h"
 #include "m8.h"
 
 int main(void)
@@ -22,16 +22,14 @@ int main(void)
 	if (m == NULL)
 		return 1;
 
-	machine_init(m, tp, tp_len, &m8_delta, &m8_is_final);
+	machine_init(m, tp, tp_len, 11, m8_transitions);
 
-	while (!(m->halt)) {
-		machine_next_state(m);
-	}
-
-	machine_destroy(m);
+	while (!(m->halt))
+		delta(m);
 
 	free(tp);
 
-	printf("%s\n",
-	       (m->is_final(m->state)) ? "Cadena válida" : "Cadena inválida");
+	printf("Cadena %s\n",
+	       (*(m->state) == m->final_state) ? "válida" : "inválida");
+	return 0;
 }

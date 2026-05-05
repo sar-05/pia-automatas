@@ -3,8 +3,6 @@
 
 #include "machine.h"
 
-struct deltaResult *m8_delta(struct Machine *m);
-
-bool m8_is_final(int state);
+extern const struct Transition m8_transitions[];
 
 #endif

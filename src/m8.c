@@ -1,96 +1,26 @@
 #include "m8.h"
+#include "machine.h"
 
-struct deltaResult *m8_delta(struct Machine *m)
-{
-	int q = m->state;
-	char s = *(m->tape);
-	/* d1 */
-	if (q == 0 && s == '\0') {
-		m->result->state = 1;
-		m->result->sigma = '\0';
-		m->result->move = R;
-		/* d2 */
-	} else if (q == 1 && s == 'a') {
-		m->result->state = 2;
-		m->result->sigma = '\0';
-		m->result->move = R;
-		/* d3 */
-	} else if (q == 2 && (s == 'a' || s == 'b' || s == 'c')) {
-		m->result->state = 2;
-		m->result->sigma = s;
-		m->result->move = R;
-		/* d4 */
-	} else if (q == 2 && s == '\0') {
-		m->result->state = 3;
-		m->result->sigma = '\0';
-		m->result->move = L;
-		/* d5 */
-	} else if (q == 3 && s == 'c') {
-		m->result->state = 4;
-		m->result->sigma = '\0';
-		m->result->move = L;
-		/* d6 */
-	} else if (q == 4 && s == 'c') {
-		m->result->state = 5;
-		m->result->sigma = '\0';
-		m->result->move = L;
-		/* d7 */
-	} else if (q == 5 && (s == 'a' || s == 'b')) {
-		m->result->state = 5;
-		m->result->sigma = s;
-		m->result->move = L;
-		/* d8 */
-	} else if (q == 5 && s == '\0') {
-		m->result->state = 6;
-		m->result->sigma = '\0';
-		m->result->move = R;
-		/* d9 */
-	} else if (q == 6 && s == '\0') {
-		m->result->state = 11;
-		m->result->sigma = '\0';
-		m->result->move = S;
-		/* d10 */
-	} else if (q == 6 && s == 'a') {
-		m->result->state = 7;
-		m->result->sigma = '\0';
-		m->result->move = R;
-		/* d11 */
-	} else if (q == 7 && (s == 'a' || s == 'b')) {
-		m->result->state = 7;
-		m->result->sigma = s;
-		m->result->move = R;
-		/* d12 */
-	} else if (q == 7 && s == '\0') {
-		m->result->state = 8;
-		m->result->sigma = '\0';
-		m->result->move = L;
-		/* d13 */
-	} else if (q == 8 && s == 'a') {
-		m->result->state = 9;
-		m->result->sigma = '\0';
-		m->result->move = L;
-		/* d14 */
-	} else if (q == 9 && s == 'b') {
-		m->result->state = 10;
-		m->result->sigma = '\0';
-		m->result->move = L;
-		/* d15 */
-	} else if (q == 10 && s == 'a') {
-		m->result->state = 5;
-		m->result->sigma = '\0';
-		m->result->move = L;
-	} else {
-		m->result->state = q;
-		m->result->sigma = s;
-		m->result->move = S;
-	}
-
-	return m->result;
-}
-
-bool m8_is_final(int state)
-{
-	if (state == 11)
-		return true;
-	return false;
-}
+const struct Transition m8_transitions[] = {
+    /* EXAMPLE \{STATE, CHAR, NEXT_STATE, NEXT_CHAR, NEXT_MOVE}*/
+    /* d1  */ {0, '\0', 1, '\0', R},
+    /* d2  */ {1, 'a', 2, '\0', R},
+    /* d3  */ {2, 'a', 2, 'a', R},
+    /* d3  */ {2, 'b', 2, 'b', R},
+    /* d3  */ {2, 'c', 2, 'c', R},
+    /* d4  */ {2, '\0', 3, '\0', L},
+    /* d5  */ {3, 'c', 4, '\0', L},
+    /* d6  */ {4, 'c', 5, '\0', L},
+    /* d7  */ {5, 'a', 5, 'a', L},
+    /* d7  */ {5, 'b', 5, 'b', L},
+    /* d8  */ {5, '\0', 6, '\0', R},
+    /* d9  */ {6, '\0', 11, '\0', S},
+    /* d10 */ {6, 'a', 7, '\0', R},
+    /* d11 */ {7, 'a', 7, 'a', R},
+    /* d11 */ {7, 'b', 7, 'b', R},
+    /* d12 */ {7, '\0', 8, '\0', L},
+    /* d13 */ {8, 'a', 9, '\0', L},
+    /* d14 */ {9, 'b', 10, '\0', L},
+    /* d15 */ {10, 'a', 5, '\0', L},
+    /* END */ END_TRANSITION,
+};

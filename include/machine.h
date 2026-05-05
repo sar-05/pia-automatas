@@ -6,30 +6,33 @@
 
 enum Move { L, R, S };
 
-struct deltaResult {
+struct Transition {
 	int state;
-	char sigma;
+	char symbol;
+	int next_state;
+	char write;
 	enum Move move;
 };
 
+#define END_TRANSITION {-1, '\0', -1, '\0', S}
+
+#define IS_END_TRANSITION(t) ((t).state == -1)
+
 struct Machine {
-	int state;
+	const int *state;
 	char *tape;
 	size_t tape_len;
 	bool halt;
-	struct deltaResult *(*delta)(struct Machine *);
-	struct deltaResult *result;
-	bool (*is_final)(int state);
+	const struct Transition *transitions;
+	int final_state;
 };
 
 void machine_init(struct Machine *,
 		  char *tape,
 		  size_t tape_len,
-		  struct deltaResult *(*delta)(struct Machine *),
-		  bool (*is_final)(int state));
+		  int final_state,
+		  const struct Transition *transitions);
 
-void machine_next_state(struct Machine *);
-
-void machine_destroy(struct Machine *);
+void delta(struct Machine *m);
 
 #endif

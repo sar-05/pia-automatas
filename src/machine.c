@@ -3,8 +3,8 @@
 void machine_init(struct Machine *m,
 		  char *tape,
 		  size_t tape_len,
-		  struct deltaResult *(*d)(struct Machine *),
-		  bool (*is_final)(int state))
+		  int final_state,
+		  const struct Transition *transitions)
 {
 	/* Copy tape_len to int to avoid overflow */
 	int n;
@@ -14,40 +14,40 @@ void machine_init(struct Machine *m,
 	}
 	tape[++n] = '\0';
 
-	struct deltaResult *dR = malloc(sizeof(struct deltaResult));
-
-	if (dR == NULL)
-		exit(1);
-
-	m->state = 0;
+	m->state = &(transitions[0].state);
 	m->tape = tape;
 	m->tape_len = tape_len;
 	m->halt = false;
-	m->delta = d;
-	m->result = dR;
-	m->is_final = is_final;
+	m->final_state = final_state;
+	m->transitions = transitions;
 }
 
-void machine_next_state(struct Machine *m)
+void delta(struct Machine *m)
 {
-	struct deltaResult *(*d)(struct Machine *);
-	d = m->delta;
+	size_t i;
+	const int *q = m->state;
+	char s = *(m->tape);
 
-	struct deltaResult *r = (*d)(m);
-	m->state = r->state;
-	*(m->tape) = r->sigma;
+	for (i = 0; !(IS_END_TRANSITION(m->transitions[i])); i++) {
+		if (m->transitions[i].state == *q &&
+		    m->transitions[i].symbol == s) {
+			m->state = &(m->transitions[i].next_state);
+			*(m->tape) = m->transitions[i].write;
 
-	if (r->move == R)
-		m->tape++;
-	else if (r->move == L)
-		m->tape--;
-	else if (r->move == S)
-		m->halt = true;
-	else
-		exit(1);
-}
+			if (m->transitions[i].move == R) {
+				m->tape++;
+				return;
+			} else if (m->transitions[i].move == L) {
+				m->tape--;
+				return;
+			} else if (m->transitions[i].move == S) {
+				m->halt = true;
+				return;
+			} else
+				exit(1);
+		}
+	}
 
-void machine_destroy(struct Machine *m)
-{
-	free(m->result);
+	/* Halt by default if no transition matches */
+	m->halt = true;
 }
