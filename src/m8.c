@@ -1,5 +1,4 @@
 #include "m8.h"
-#include "machine.h"
 
 const struct Transition m8_transitions[] = {
     /* EXAMPLE \{STATE, CHAR, NEXT_STATE, NEXT_CHAR, NEXT_MOVE}*/
