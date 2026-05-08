@@ -1,0 +1,73 @@
+\documentclass[../main.tex]{subfiles}
+\graphicspath{{\subfix{../images/}}}
+
+\begin{document}
+    \section{Diagramas para \texorpdfstring{\emph{M\textsubscript{2}}}{M2}}
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture} [node distance = 2.5 cm,
+                scale=1.15,
+                transform shape,
+                on grid,
+                auto,
+                every state/.style = {draw = white}
+            ]
+            \node (q0) [state, initial, initial text = {}] {$R_\textcrb$};
+            \node (q1) [state, right = of q0] {$L$};
+            \node (q2) [state, right = of q1] {$\textcrb L$};
+            \node (q3) [state, right = of q2] {$\textcrb L$};
+            \node (q4) [state, right = of q3] {$\textcrb L$};
+            \node (q5) [state, below = of q4] {$\textcrb L$};
+            \node (q6) [state, left = of q5] {$\textcrb L$};
+            \node (q7) [state, accepting, draw = black, left = of q6] {$\textcrb L$};
+
+            \path[-To]
+            (q0) edge node {\(\sigma=\textcrb\)} (q1)
+            (q1) edge node {\(\sigma=b\)} (q2)
+            (q2) edge node {\(\sigma=b\)} (q3)
+            (q3) edge node {\(\sigma=b\)} (q4)
+            (q4) edge node {\(\sigma=a\)} (q5)
+            (q4) edge node {\(\sigma=\textcrb\)} (q7)
+            (q5) edge node {\(\sigma=a\)} (q6)
+            (q6) edge node {} (q5)
+            (q6) edge node {\(\sigma=\textcrb\)} (q7);
+
+        \end{tikzpicture}
+        \caption{Diagrama de composición para \(M_2\)}
+    \end{figure}
+    \vfill
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture} [node distance = 2.5cm,
+                scale=1.15,
+                transform shape,
+                on grid,
+                auto,
+            ]
+            \node (q0) [state, initial, initial text = {}] {\(q_0\)};
+            \node (q1) [state, right = of q0] {\(q_1\)};
+            \node (q2) [state, right = of q1] {\(q_2\)};
+            \node (q3) [state, right = of q2] {\(q_3\)};
+            \node (q4) [state, right = of q3] {\(q_4\)};
+            \node (qn) [state, draw = white, below = of q4] {};
+            \node (q5) [state, below = of qn] {\(q_5\)};
+            \node (q6) [state, left = of q5] {\(q_6\)};
+            \node (q7) [state, left = of q6] {\(q_7\)};
+            \node (q8) [state, accepting, below = of q2] {\(q_8\)};
+
+            \path[-To]
+            (q0) edge node {\(\textcrb\rightarrow\textcrb R\)}   (q1)
+            (q1) edge [loop above] node [above = 0.4cm] {\(a, b\rightarrow R\)}   (q1)
+            (q1) edge node {\(\textcrb\rightarrow L\)}   (q2)
+            (q2) edge node {\(b\rightarrow\textcrb L\)}   (q3)
+            (q3) edge node {\(b\rightarrow\textcrb L\)}   (q4)
+            (q4) edge node {\(b\rightarrow\textcrb L\)}   (q5)
+            (q5) edge node {\(\textcrb\rightarrow S\)}   (q8)
+            (q5) edge node {\(a\rightarrow\textcrb L\)}   (q6)
+            (q6) edge node {\(a\rightarrow\textcrb L\)}   (q7)
+            (q7) edge node {}   (q6)
+            (q7) edge node {\(\textcrb\rightarrow S\)}   (q8);
+        \end{tikzpicture}
+        \caption{Diagrama de estados para \(M_2\)}
+    \end{figure}
+\end{document}

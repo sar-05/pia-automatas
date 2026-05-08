@@ -1,0 +1,18 @@
+\documentclass[../main.tex]{subfiles}
+\graphicspath{{\subfix{../images/}}}
+
+\begin{document}
+    \section{Análisis de \texorpdfstring{\emph{L\textsubscript{2}}}{L2}}
+    \[
+        \boxed{L_2=\{a^{2n}b^3:n\ge0\}}
+    \]
+
+    El prefijo `a' crece de par en par respecto a \(n\). Si analizamos las cadenas generadas por \(n\in\{0,1,2\}\) obtenemos:
+    \begin{align*}
+        w_0 &= \text{``bbb''}\\
+        w_1 &=\text{``aabbb''}\\
+        w_2 &=\text{``aaaabbb''}
+    \end{align*}
+
+    Entonces, cualquier cadena \(w \in L_2\) comenzará con una cantidad par de `a' y terminará siempre con exactamente tres `b`. La máquina de Turing \(M_2\) verifica que se cumplan estas condiciones avanzando hasta el símbolo blanco (\textcrb) que representa el final de la cadena, validando el sufijo `bbb' y consumiendo en bucle letras `a' de dos en dos de izquierda a derecha. \(M_2\) alcanzará su estado de aceptación únicamente si la cantidad de `a's encontrada es par.
+\end{document}

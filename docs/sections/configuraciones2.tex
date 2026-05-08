@@ -1,0 +1,41 @@
+\documentclass[../main.tex]{subfiles}
+\graphicspath{{\subfix{../images/}}}
+
+\begin{document}
+    \section{Configuraciones de \texorpdfstring{\emph{M\textsubscript{2}}}{M2}}
+
+    Se comprueba que \(M_2\) es capaz de identificar que \(w_0\in L_2\):
+    \begin{alignat*}{4}
+        {} & \delta(q_0, \underline{\textcrb}bbb\textcrb)
+           & \ovdash[1] & \delta(q_1, \textcrb\underline{b}bb\textcrb)
+           & \ovdash[2] & \delta(q_1, \textcrb b\underline{b}b\textcrb)
+           & \ovdash[+] & \delta(q_1, \textcrb bbb\underline{\textcrb}) \\
+        {} & {}
+           & \ovdash[3] & \delta(q_2, \textcrb bb\underline{\textcrb})
+           & \ovdash[4] & \delta(q_3, \textcrb b\underline{b}\textcrb)
+           & \ovdash[5] & \delta(q_4, \textcrb\underline{b}\textcrb) \\
+        {} & {}
+           & \ovdash[6] & \delta(q_5, \underline{\textcrb}\textcrb)
+           & \ovdash[7] & \delta(q_8, \textcrb\textcrb)
+           & {}         &
+    \end{alignat*}
+    Se comprueba que \(M_2\) es capaz de identificar que \(w_2\in L_2\):
+    \begin{alignat*}{4}
+        {} & \delta(q_0, \underline{\textcrb}aaaabbb\textcrb)
+           & \ovdash[1] & \delta(q_1, \textcrb\underline{a}aaabbb\textcrb)
+           & \ovdash[2] & \delta(q_1, \textcrb a\underline{a}aabbb\textcrb)
+           & \ovdash[+] & \delta(q_1, \textcrb aaaabbb\underline{\textcrb})\\
+        {} & {}
+           & \ovdash[3] & \delta(q_2, \textcrb aaaabb\underline{b})
+           & \ovdash[4] & \delta(q_3, \textcrb aaaab\underline{b}\textcrb)
+           & \ovdash[5] & \delta(q_4, \textcrb aaaa\underline{b}\textcrb)\\
+        {} & {}
+           & \ovdash[6] & \delta(q_5, \textcrb aaa\underline{a}\textcrb)
+           & \ovdash[8] & \delta(q_6, \textcrb aa\underline{a}\textcrb)
+           & \ovdash[9] & \delta(q_7, \textcrb a\underline{a}\textcrb)\\
+        {} & {}
+           & \ovdash[10] & \delta(q_6, \textcrb\underline{a}\textcrb)
+           & \ovdash[9] & \delta(q_7, \underline{\textcrb}\textcrb)
+           & \ovdash[11] & \delta(q_8, \textcrb\textcrb)\\
+    \end{alignat*}
+\end{document}
