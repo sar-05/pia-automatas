@@ -2,7 +2,7 @@
 \graphicspath{{\subfix{../images/}}}
 
 \begin{document}
-    \section{Comprobaciones para \texorpdfstring{\emph{M\textsubscript{8}}}{M8}}
+    \section{Configuraciones de \texorpdfstring{\emph{M\textsubscript{8}}}{M8}}
 
     Se comprueba que \(M_8\) es capaz de identificar que \(w_0\in L_8\):
     \begin{alignat*}{4}
@@ -11,12 +11,12 @@
            & \ovdash[2] & \delta(q_2, \textcrb\underline{c}c\textcrb)
            & \ovdash[3] & \delta(q_2, \textcrb c\underline{c}\textcrb) \\
         {} & {}
-           & \ovdash[3] & \delta(q_2, \textcrb cc\underline{\textcrb})
+           & \ovdash[+] & \delta(q_2, \textcrb cc\underline{\textcrb})
            & \ovdash[4] & \delta(q_3, \textcrb c\underline{c}\textcrb)
            & \ovdash[5] & \delta(q_4, \textcrb\underline{c}\textcrb) \\
         {} & {}
            & \ovdash[6] & \delta(q_5, \underline{\textcrb}\textcrb)
-           & \ovdash[8] & \delta(q_3, \textcrb\underline{\textcrb})
+           & \ovdash[8] & \delta(q_6, \textcrb\underline{\textcrb})
            & \ovdash[9] & \delta(q_{11}, \textcrb\textcrb)
     \end{alignat*}
     Se comprueba que \(M_8\) es capaz de identificar que \(w_2\in L_8\):
@@ -59,7 +59,7 @@
            & \ovdash[15] & \delta(q_5, \underline{\textcrb}\textcrb)\\
         {} & {}
            & \ovdash[8] & \delta(q_6, \textcrb\underline{\textcrb})
-           & \ovdash[9] & \delta(q_6, \textcrb\textcrb)
+           & \ovdash[9] & \delta(q_{11}, \textcrb\textcrb)
            & {}
     \end{alignat*}
 \end{document}

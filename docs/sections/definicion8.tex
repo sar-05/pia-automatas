@@ -5,13 +5,14 @@
     \section{Definición de \texorpdfstring{\emph{M\textsubscript{8}}}{M8}}
     Sea \(M_8 = (Q, \Sigma, \Gamma, s, \text{\textcrb}, F, \delta) \) la maquina de Turing tal que \(L(M_8)=L_8\), entonces
     \begin{align*}
-        Q &= \{q_i : 0 \ge i \ge 11 \} \\
-        \Sigma &= \{ a, b \} \\
+        Q &= \{q_i : 11 \ge i \ge 0 \} \\
+        \Sigma &= \{ a, b, c \} \\
         \Gamma &= \Sigma \cup \{ \textcrb \} \\
         s &= q_0 \in Q \\
         F &= \{ q_{11} \} \subset Q
     \end{align*}
     y \(\delta\) dado por
+    \setcounter{equation}{0}
     {\allowdisplaybreaks
     \begin{alignat}{2}
         \delta(q_0, \textcrb)  &= (q_1, \textcrb, R)    \\

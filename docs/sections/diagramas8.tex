@@ -2,6 +2,7 @@
 \graphicspath{{\subfix{../images/}}}
 
 \begin{document}
+    \setcounter{figure}{0}   
     \section{Diagramas para \texorpdfstring{\emph{M\textsubscript{8}}}{M8}}
     \begin{figure}[H]
         \centering
@@ -41,7 +42,7 @@
             (q10) edge node {\(\sigma=a\)} (q4);
 
         \end{tikzpicture}
-        \caption{Diagrama de composición}
+        \caption{Diagrama de composición para \(M_8\)}
     \end{figure}
     \vfill
     \begin{figure}[H]
@@ -79,9 +80,9 @@
             (q7) edge [loop below] node {\(a, b \rightarrow R\)}   ()
             (q8) edge node {\(a\rightarrow\textcrb L\)}   (q9)
             (q9) edge node {\(b\rightarrow\textcrb L\)}   (q10)
-            (q6) edge [bend right] node [above right] {\(b\rightarrow S\)}   (q11)
+            (q6) edge [bend right] node [above right] {\(\textcrb\rightarrow S\)}   (q11)
             (q10) edge [bend left] node [above right] {\(a\rightarrow\textcrb L\)}   (q5);
         \end{tikzpicture}
-        \caption{Diagrama de estados}
+        \caption{Diagrama de estados para \(M_8\)}
     \end{figure}
 \end{document}
