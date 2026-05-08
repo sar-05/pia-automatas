@@ -14,6 +14,7 @@ struct ValidateArgs {
 	bool trace;
 	bool prompt;
 	bool invalid;
+	bool help;
 	char *errmsg;
 };
 
@@ -34,13 +35,13 @@ static void _list_languages(void)
 	       "Lenguaje 8 = a^{n+1}(aba)^nc^2\n");
 }
 
-static struct optparse_long long_opts[] = {
-    {"string", 's', OPTPARSE_REQUIRED},
-    {"in", 'i', OPTPARSE_REQUIRED},
-    {"list-languages", 'l', OPTPARSE_NONE},
-    {"trace", 't', OPTPARSE_NONE},
-    {"prompt", 'p', OPTPARSE_REQUIRED},
-    {0}};
+static struct optparse_long long_opts[] = {{"string", 's', OPTPARSE_REQUIRED},
+					   {"in", 'i', OPTPARSE_REQUIRED},
+					   {"list", 'l', OPTPARSE_NONE},
+					   {"trace", 't', OPTPARSE_NONE},
+					   {"prompt", 'p', OPTPARSE_REQUIRED},
+					   {"help", 'h', OPTPARSE_NONE},
+					   {0}};
 
 static struct ValidateArgs _parse_validate_args(char **argv)
 {
@@ -77,6 +78,9 @@ static struct ValidateArgs _parse_validate_args(char **argv)
 		case 't':
 			args.trace = true;
 			break;
+		case 'h':
+			args.help = true;
+			break;
 		case '?':
 			args.invalid = true;
 			args.errmsg = opts.errmsg;
@@ -85,19 +89,27 @@ static struct ValidateArgs _parse_validate_args(char **argv)
 	}
 	args.string = optparse_arg(&opts);
 	// Relationship validation
-	if (args.list && (args.lang || args.string || args.prompt)) {
+	if (args.list &&
+	    (args.lang || args.string || args.prompt || args.help)) {
 		args.invalid = true;
 		args.errmsg = "-l no puede combinarse con ninguna otra opción";
+	}
+	if (args.help &&
+	    (args.lang || args.string || args.prompt || args.list)) {
+		args.invalid = true;
+		args.errmsg = "-h no puede combinarse con ninguna otra opción";
 	}
 	if (!args.invalid && args.prompt && (args.lang == 0 || args.string)) {
 		args.invalid = true;
 		args.errmsg = "uso: validate -p <lenguaje> [-t]";
 	}
-	if (!args.invalid && !args.list && !args.prompt && !args.lang) {
+	if (!args.invalid && !args.list && !args.prompt && !args.lang &&
+	    !args.help) {
 		args.invalid = true;
 		args.errmsg = "se requiere de -i / --in";
 	}
-	if (!args.invalid && !args.list && !args.prompt && !args.string) {
+	if (!args.invalid && !args.list && !args.help && !args.prompt &&
+	    !args.string) {
 		args.invalid = true;
 		args.errmsg = "hace falta argumento";
 	}
@@ -115,7 +127,7 @@ static const struct Transition *_get_transitions(int lang)
 		return m8_transitions;
 	}
 
-	return 0;
+	return NULL;
 }
 
 static int _get_fstate(int lang)
@@ -130,11 +142,27 @@ static int _get_fstate(int lang)
 		return M8_FINAL_STATE;
 	}
 
-	return 0;
+	return -1;
+}
+
+static const char *_get_name(int lang)
+{
+
+	assert(lang == 2 || lang == 8);
+
+	switch (lang) {
+	case 2:
+		return "Lenguaje 2";
+	case 8:
+		return "Lenguaje 8";
+	}
+
+	return NULL;
 }
 
 static void _run_machine_prompt(const struct Transition *transitions,
 				int final_state,
+				const char *name,
 				bool trace)
 {
 	struct Machine *m;
@@ -146,11 +174,18 @@ static void _run_machine_prompt(const struct Transition *transitions,
 
 	char *line;
 	ic_set_history(NULL, -1);
-	while ((line = ic_readline(NULL)) != NULL) {
+	while ((line = ic_readline(name)) != NULL) {
+		if (!strcmp(line, "exit")) {
+			free(line);
+			break;
+		}
+
 		machine_init(m, line, final_state, transitions);
 		free(line);
+
 		while (!(m->halt))
 			delta(m);
+
 		printf("Cadena %s\n",
 		       (*(m->state) == m->final_state) ? "válida" : "inválida");
 		machine_destroy(m);
@@ -183,11 +218,36 @@ static bool _run_machine_single(char *tape,
 	return r;
 }
 
+static void _print_help(void)
+{
+	printf("Uso: validate <cadena> -i <lenguaje>\n"
+	       "     validate -p, --prompt <lenguaje>\n"
+	       "     validate -l, --list\n"
+	       "\n"
+	       "Opciones:\n"
+	       "  -i, --in <lenguaje>    Valida si <cadena> pertenece al "
+	       "lenguaje especificado.\n"
+	       "                         Muestra 'Cadena valida' o 'Cadena "
+	       "invalida'.\n"
+	       "  -p, --prompt <lenguaje> Inicia un prompt interactivo para "
+	       "validar cadenas\n"
+	       "                         una tras otra sobre el lenguaje "
+	       "especificado.\n"
+	       "  -l, --list             Muestra los lenguajes disponibles"
+	       "disponibles.\n"
+	       "\n");
+}
+
 void handle_validate(char **argv)
 {
 	struct ValidateArgs args = _parse_validate_args(argv);
 	if (args.invalid) {
 		fprintf(stderr, "validate: %s\n", args.errmsg);
+		return;
+	}
+
+	if (args.help) {
+		_print_help();
 		return;
 	}
 
@@ -199,11 +259,15 @@ void handle_validate(char **argv)
 	if (args.prompt) {
 		_run_machine_prompt(_get_transitions(args.lang),
 				    _get_fstate(args.lang),
+				    _get_name(args.lang),
 				    args.trace);
 		return;
 	}
 
-	/* TODO: verify that transitions and state aren't empty */
+	assert(_get_transitions(args.lang) != NULL);
+	assert(_get_name(args.lang) != NULL);
+	assert(_get_fstate(args.lang) != -1);
+
 	bool v;
 	v = _run_machine_single(args.string,
 				_get_transitions(args.lang),
