@@ -1,0 +1,6 @@
+[submodule "libs/isocline"]
+	path = libs/isocline
+	url = https://github.com/daanx/isocline.git
+[submodule "libs/optparse"]
+	path = libs/optparse
+	url = https://github.com/skeeto/optparse.git
