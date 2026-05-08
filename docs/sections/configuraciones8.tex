@@ -6,8 +6,8 @@
 
     Se comprueba que \(M_8\) es capaz de identificar que \(w_0\in L_8\):
     \begin{alignat*}{4}
-        {} & \delta(q_0, \underline{\textcrb}acc)
-           & \ovdash[1] & \delta(q_0, \textcrb\underline{a}cc\textcrb)
+        {} & \delta(q_0, \underline{\textcrb}acc\textcrb)
+           & \ovdash[1] & \delta(q_1, \textcrb\underline{a}cc\textcrb)
            & \ovdash[2] & \delta(q_2, \textcrb\underline{c}c\textcrb)
            & \ovdash[3] & \delta(q_2, \textcrb c\underline{c}\textcrb) \\
         {} & {}
@@ -48,7 +48,7 @@
         {} & {}
            & \ovdash[+] & \delta(q_{5}, \underline{\textcrb} aaba\textcrb)
            & \ovdash[8] & \delta(q_{6}, \textcrb \underline{a}aba\textcrb)
-           & \ovdash[9] & \delta(q_{7}, \textcrb \underline{a}ba\textcrb)\\
+           & \ovdash[10] & \delta(q_{7}, \textcrb \underline{a}ba\textcrb)\\
         {} & {}
            & \ovdash[11] & \delta(q_{7}, \textcrb a\underline{b}a\textcrb)
            & \ovdash[+] & \delta(q_{7}, \textcrb aba\underline{\textcrb})
