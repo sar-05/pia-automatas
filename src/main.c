@@ -1,35 +1,37 @@
-#define _POSIX_C_SOURCE 200809L
-#include "machine.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "m8.h"
+#include <string.h>
+#include "isocline.h"
+#include "validate.h"
+#include "argv.h"
 
 int main(void)
 {
-	char *tp = NULL;
-	size_t buf_size;
-	size_t tp_len;
 
-	tp_len = getline(&tp, &buf_size, stdin);
+	char *line;
+	ic_set_history(NULL, -1);
+	while ((line = ic_readline(NULL)) != NULL) {
+		char **argv = make_argv(line, NULL);
+		if (!argv || !argv[0]) {
+			free_argv(argv);
+			free(line);
+			continue;
+		}
 
-	if (tp == NULL)
-		return 1;
+		if (!strcmp(argv[0], "validate"))
+			handle_validate(argv);
+		else if (!strcmp(argv[0], "clear"))
+			puts("\033[H\033[2J");
+		else if (!strcmp(argv[0], "exit")) {
+			free_argv(argv);
+			free(line);
+			break;
+		} else
+			fprintf(stderr, "Comando desconocido: %s\n", argv[0]);
 
-	struct Machine *m;
+		free_argv(argv);
+		free(line);
+	}
 
-	m = (struct Machine *)malloc(sizeof(struct Machine));
-
-	if (m == NULL)
-		return 1;
-
-	machine_init(m, tp, tp_len, 11, m8_transitions);
-
-	while (!(m->halt))
-		delta(m);
-
-	free(tp);
-
-	printf("Cadena %s\n",
-	       (*(m->state) == m->final_state) ? "válida" : "inválida");
 	return 0;
 }

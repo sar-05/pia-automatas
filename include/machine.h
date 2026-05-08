@@ -21,6 +21,7 @@ struct Transition {
 struct Machine {
 	const int *state;
 	char *tape;
+	char *tape_ptr;
 	size_t tape_len;
 	bool halt;
 	const struct Transition *transitions;
@@ -29,9 +30,10 @@ struct Machine {
 
 void machine_init(struct Machine *,
 		  char *tape,
-		  size_t tape_len,
 		  int final_state,
 		  const struct Transition *transitions);
+
+void machine_destroy(struct Machine *m);
 
 void delta(struct Machine *m);
 

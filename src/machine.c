@@ -1,25 +1,36 @@
+#include <stdio.h>
+#include <string.h>
 #include "machine.h"
 
 void machine_init(struct Machine *m,
 		  char *tape,
-		  size_t tape_len,
 		  int final_state,
 		  const struct Transition *transitions)
 {
-	/* Copy tape_len to int to avoid overflow */
-	int n;
 
-	for (n = tape_len - 2; n >= 0; n--) {
-		tape[n + 1] = tape[n];
+	m->tape_len = strlen(tape);
+
+	/* +1 for leading '\0', +1 for null terminator */
+	m->tape_ptr = malloc(m->tape_len + 2);
+	m->tape = m->tape_ptr;
+
+	if (m->tape == NULL) {
+		perror("Error alocating memory for tape");
+		return;
 	}
-	tape[++n] = '\0';
+
+	m->tape[0] = '\0';
+	snprintf(m->tape + 1, m->tape_len + 1, "%s", tape);
 
 	m->state = &(transitions[0].state);
-	m->tape = tape;
-	m->tape_len = tape_len;
 	m->halt = false;
 	m->final_state = final_state;
 	m->transitions = transitions;
+}
+
+void machine_destroy(struct Machine *m)
+{
+	free(m->tape_ptr);
 }
 
 void delta(struct Machine *m)
