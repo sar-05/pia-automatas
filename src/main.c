@@ -4,10 +4,16 @@
 #include "isocline.h"
 #include "validate.h"
 #include "argv.h"
+#ifdef _WIN32
+#include <windows.h>
+#endif
 
 int main(void)
 {
-
+#ifdef _WIN32
+	SetConsoleOutputCP(65001);
+	SetConsoleCP(65001);
+#endif
 	char *line;
 	ic_set_history(NULL, -1);
 	while ((line = ic_readline(NULL)) != NULL) {
