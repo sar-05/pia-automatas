@@ -1,0 +1,96 @@
+\documentclass[../main.tex]{subfiles}
+\graphicspath{{\subfix{../images/}}}
+
+\begin{document}
+    \section{Manual de Uso}
+    El programa adjunto es una aplicación de línea de comandos desarrollada en
+    lenguaje C que permite validar cadenas mediante máquinas de Turing
+    previamente definidas. El sistema cuenta con dos máquinas:
+
+    \begin{itemize}
+        \item M2: Reconoce el Lenguaje 2
+        \item M8: Reconoce el Lenguaje 8
+    \end{itemize}
+
+    El usuario debe ingresar la cadena a evaluar y el lenguaje al que se desea
+    comprobar si pertenece; el programa seleccionará automáticamente la máquina de
+    Turing correspondiente.
+
+    Se envió el ejecutable compilado listo para ejecutarse al hacer doble click.
+    Después se abrirá una ventana de consola negra. Ahí ya se puede escribir
+    comandos.
+
+    Las opciones para los comandos siguen la convención UNIX: cada opción tiene
+    una forma corta (p.ej. \code{-i}) y una forma larga equivalente (p.ej.
+    \code{--in}), separadas por coma en los ejemplos de sintaxis. Se debe
+    escoger una de las dos. No deben utilizarse ambas a la vez.
+
+    \section{Comandos disponibles}
+
+    \subsection{Comando \texttt{validate}}
+    Este comando permite validar cadenas utilizando una máquina de Turing
+    específica. Muestra en pantalla ``Cadena válida'' si la cadena dada pertenece al lenguaje especificado o ``Cadena inválida'' en caso contrario. Admite dos modos de uso:
+
+    \textbf{Sintaxis 1 — validación de una cadena:}
+
+    \begin{lstlisting}[style=console]
+    validate <cadena> -i, --in <lenguaje>
+    \end{lstlisting}
+
+    \begin{description}
+        \item[\code{<cadena>}] Cadena a evaluar, por ejemplo: \code{aabbb}.
+        \item[\code{<lenguaje>}] Indica el lenguaje al que debe pertenecer la cadena dada.
+    \end{description}
+
+    \textbf{Sintaxis 2 — modo prompt:}
+
+    \begin{lstlisting}[style=console]
+    validate -p, --prompt <lenguaje>
+    \end{lstlisting}
+
+    \begin{description}
+        \item[\code{-p}, \code{--prompt}] Inicia un prompt interactivo en el
+        que se pueden ingresar cadenas una tras otra para validarlas sobre el
+        lenguaje especificado. Utilize \code{exit} para salir de este modo.
+        \item[\code{<lenguaje>}] Selecciona la máquina de Turing. Valores
+        posibles: \code{m2}, \code{m8}.
+    \end{description}
+
+    \textbf{Sintaxis 3 — listado de máquinas:}
+
+    \begin{lstlisting}[style=console]
+    validate -l, --list
+    \end{lstlisting}
+
+    \begin{description}
+        \item[\code{-l}, \code{--list}] Se mostrará las máquinas disponibles en pantalla.
+    \end{description}
+
+    \subsection{Comando \texttt{clear}}
+
+    El programa incluye un comando para limpiar la pantalla. Este comando elimina
+    el contenido mostrado anteriormente en la consola.
+
+    \textbf{Sintaxis:}
+    \begin{lstlisting}[style=console]
+    clear
+    \end{lstlisting}
+
+    \subsection{Comando \texttt{exit}}
+
+    Para finalizar la ejecución del programa se utiliza el comando \code{exit}.
+    Después de escribirlo y presionar \textit{Enter}, el programa terminará su
+    ejecución.
+
+    \textbf{Sintaxis:}
+    \begin{lstlisting}[style=console]
+    exit
+    \end{lstlisting}
+
+    Finalmente, cabe mencionar que el programa incorpora una implementación
+    portable de \emph{readline} llamada \emph{(isocline)}, por lo que la
+    consola cuenta con historial de comandos navegable mediante las teclas de
+    flecha y los atajos de teclado estándar de Bash, como \texttt{Ctrl+R} para
+    búsqueda inversa o \texttt{Ctrl+A} y \texttt{Ctrl+E} para moverse al inicio y
+    al final de la línea, respectivamente.
+\end{document}

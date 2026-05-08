@@ -51,6 +51,27 @@
 % add to produce automata grahics
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta, automata, positioning}
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+\newcommand{\code}[1]{\texttt{#1}}
+ 
+% Style for command-line listings
+\lstdefinestyle{console}{
+    backgroundcolor=\color{gray!10},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    framerule=0.4pt,
+    rulecolor=\color{gray!60},
+    xleftmargin=0.5em,
+    xrightmargin=0.5em,
+    aboveskip=0.5em,
+    belowskip=0.5em,
+}
+
+
  % add for creating links between document references, should be added last
 \usepackage{hyperref}
 % add to be able to have a multi-file project, should be added last
@@ -68,4 +89,6 @@
     \subfile{sections/definicion8}
     \subfile{sections/diagramas8}
     \subfile{sections/configuraciones8}
+    \subfile{sections/manual}
+    \subfile{sections/conclusion}
 \end{document}
